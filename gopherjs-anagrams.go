@@ -1,11 +1,13 @@
 package main
 
 import (
-	"honnef.co/go/js/dom"
 	"regexp"
+	"runtime"
 	"sort"
 	"strconv"
 	"strings"
+
+	"honnef.co/go/js/dom"
 )
 
 // Sanitize converts the input string to uppercase and removes all characters
@@ -42,6 +44,11 @@ func main() {
 		}(waitDiv)
 
 		go func(d, w *dom.HTMLDivElement) {
+			// This goroutine is heavily CPU bound, so we need Gosched
+			// here to give the other goroutine time to run (and set the
+			// "Please Wait" indicator.
+			runtime.Gosched()
+
 			word := doc.GetElementByID("word").(*dom.HTMLInputElement).Value
 			phrase, err := sanitize(word)
 			if err != nil {
@@ -64,9 +71,8 @@ func main() {
 			sort.Strings(an)
 			d.SetInnerHTML("<pre>" + strings.Join(an, "\n") + "</pre>")
 
-			//w.Style().SetProperty("display", "none", "")
+			w.Style().SetProperty("display", "none", "")
 
 		}(resultsDiv, waitDiv)
-		println("I'm out of here...")
 	})
 }
