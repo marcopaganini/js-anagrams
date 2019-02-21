@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+  <title>Anagram generator</title>
+</head>
+<body>
+  <h1>Anagram Generator</h1>
+  <p>
+  This is a simple anagram generator. Enter a word or phrase in the box
+  below. Please note that long phrases may take a very long time to complete
+  and lock up your browser.
+  </p>
+  <form action="#">
+    Word or Phrase: <input type="text" id="word">
+    <p>
+    Mininum Word Length:
+    <input type="number" id="minWordLen" value="1" min="1" max="32"><br>
+
+    Maximum Word Length:
+    <input type="number" id="maxWordLen" value="16" min="1" max="32"><br>
+
+    Maximum number of Words:
+    <input type="number" id="maxWords" value="3" min="1" max="16"><br>
+
+    <br>
+    <button id="button1">Generate</button>
+  </form>
+  <div id="wait"></div>
+  <div id="results" style="background-color: #e0e0e0"></div>
+  <script src="demo.js"></script>
+</body>
+</html>
